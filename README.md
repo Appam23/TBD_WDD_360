@@ -20,4 +20,4 @@ Use this as a starting point to complete the WDD 360 team activity: the SleepOut
 - `npm run format` to run Prettier to automatically format your code.
 
   ## Production site
-  https://wdd-360.netlify.app/
+[  https://wdd-360.netlify.app/](https://wdd360-fall-26.netlify.app)
