@@ -2,33 +2,36 @@ import type { Product } from "./types.mts";
 import { getLocalStorage, setLocalStorage } from "./utils.mts";
 import { findProductById } from "./productData.mts";
 
-function addProductToCart(product: Product) {
-  const storedCart = getLocalStorage("so-cart");
+function saveProductToCart(product: Product): void {
+  const existingData = getLocalStorage("so-cart");
+  
+  let cartList: Product[] = [];
+  if (Array.isArray(existingData)) {
+    cartList = existingData;
+  } else if (existingData) {
+    cartList = [existingData];
+  }
 
-  const cart: Product[] = Array.isArray(storedCart)
-    ? storedCart
-    : storedCart
-      ? [storedCart]
-      : [];
-
-  cart.push(product);
-
-  setLocalStorage("so-cart", cart);
+  cartList.push(product);
+  setLocalStorage("so-cart", cartList);
 }
 
-async function addToCartHandler(e: Event) {
-  const button = e.currentTarget as HTMLButtonElement;
-  const productId = button.dataset.id;
+async function handleAddToCart(event: Event): Promise<void> {
+  const target = event.currentTarget as HTMLButtonElement | null;
+  const productId = target?.dataset?.id;
 
-  if (!productId) return;
+  if (!productId) {
+    console.warn("No product ID found on target element.");
+    return;
+  }
 
-  const product = await findProductById(productId);
-
-  if (product) {
-    addProductToCart(product);
+  const selectedProduct = await findProductById(productId);
+  if (selectedProduct) {
+    saveProductToCart(selectedProduct);
   }
 }
 
-document
-  .getElementById("addToCart")
-  ?.addEventListener("click", addToCartHandler);
+const addToCartBtn = document.getElementById("addToCart");
+if (addToCartBtn) {
+  addToCartBtn.addEventListener("click", handleAddToCart);
+}
