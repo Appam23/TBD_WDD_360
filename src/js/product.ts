@@ -1,20 +1,34 @@
 import type { Product } from "./types.mts";
-import { setLocalStorage } from "./utils.mts";
+import { getLocalStorage, setLocalStorage } from "./utils.mts";
 import { findProductById } from "./productData.mts";
 
 function addProductToCart(product: Product) {
-  setLocalStorage("so-cart", product);
+  const storedCart = getLocalStorage("so-cart");
+
+  const cart: Product[] = Array.isArray(storedCart)
+    ? storedCart
+    : storedCart
+      ? [storedCart]
+      : [];
+
+  cart.push(product);
+
+  setLocalStorage("so-cart", cart);
 }
-// add to cart button event handler
+
 async function addToCartHandler(e: Event) {
-  const target = e.target as HTMLButtonElement;
-  if (target.dataset.id) {
-    const product = await findProductById(target.dataset.id);
+  const button = e.currentTarget as HTMLButtonElement;
+  const productId = button.dataset.id;
+
+  if (!productId) return;
+
+  const product = await findProductById(productId);
+
+  if (product) {
     addProductToCart(product);
   }
 }
 
-// add listener to Add to Cart button
 document
   .getElementById("addToCart")
   ?.addEventListener("click", addToCartHandler);
