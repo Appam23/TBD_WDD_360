@@ -1,8 +1,8 @@
 ---
-import '../css/style.css';
 let {title} = Astro.props;
+import '../css/style.css';
+import UserMenu from "../components/UserMenu.svelte";
 ---
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -14,28 +14,15 @@ let {title} = Astro.props;
     <header class="divider">
       <div class="logo">
         <img src="/images/noun_Tent_2517.svg" alt="tent image for logo" />
-        <a href="/index.html"> Sleep<span class="highlight">Outside</span></a>
+        <a href="index.astro"> Sleep<span class="highlight">Outside</span></a>
       </div>
       <nav class="menu-right">
         <div class="user-menu-container">
-          <div class="user">
-            <button
-              class="user__button"
-              aria-label="user management"
-              title="User Management"
-            >
-              <img src="/images/noun-hiker.svg" alt="user icon" />
-            </button>
-            <nav class="user__menu">
-              <a href="#">Login</a>
-              <a href="#">Profile</a>
-              <a href="#">Orders</a>
-            </nav>
-          </div>
+          <UserMenu client:load />
         </div>
         <div class="cart">
           <a
-            href="/cart/index.html"
+            href="cart/index.astro"
             aria-label="Shopping Cart"
             title="Shopping Cart"
           >
@@ -67,8 +54,18 @@ let {title} = Astro.props;
       </nav>
     </header>
     <main class="divider">
-      <slot />
+	<slot />
     </main>
     <footer>&copy;NOT a real business</footer>
   </body>
 </html>
+
+
+<style>
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+	}
+</style>
