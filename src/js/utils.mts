@@ -25,6 +25,11 @@ export function getLocalStorage(key: string) {
 export function setLocalStorage(key: string, data: unknown) {
   localStorage.setItem(key, JSON.stringify(data));
 }
+
+export function getParam(param: string): string | null {
+  return new URLSearchParams(window.location.search).get(param);
+}
+
 // set a listener for both touchend and click
 interface ClickHandler {
   (e:Event):void;
