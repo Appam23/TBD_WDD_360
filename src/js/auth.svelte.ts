@@ -21,9 +21,9 @@ export async function login(email:string, password:string) {
   const data = await res.json();
   if(res.ok) {
     userStore.user = data.user;
-      userStore.isLoggedIn = true;
-      userStore.token = data.token;
-      setLocalStorage("so-user", userStore);
+    userStore.isLoggedIn = true;
+    userStore.token = data.token;
+    setLocalStorage("so-user", userStore);
     return data
   } else {
     throw new Error(data.error.message);
