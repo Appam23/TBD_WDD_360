@@ -65,7 +65,7 @@
       <a href="/login">Login</a>
     {:else}
       <a href="/login" onclick={handleLogout}>Logout</a>
-      <a href="#">Profile</a>
+      <a href="/profile" onclick={getProfile}>Profile</a>
       <a href="#">Orders</a>
     {/if}
   </nav>
