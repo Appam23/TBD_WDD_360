@@ -5,6 +5,8 @@
   let profile = $state("");
 
   async function getProfile() {
+    // Just for testing purpose
+    console.log(userStore.token)
     const res = await fetch(`${baseURL}users/protected`, {
       method: "GET",
       headers: {
@@ -17,6 +19,7 @@
     } else {
       // if we get an error back...it means there is something wrong with our token and we should log the user out.
       logout();
+      window.location.href = `login/?redirect=${window.location.pathname}`;
     }
   }
   
