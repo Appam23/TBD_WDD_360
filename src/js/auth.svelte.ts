@@ -1,6 +1,6 @@
 import { getLocalStorage, setLocalStorage } from "./utils.mts";
-const baseURL = import.meta.env.PUBLIC_SERVER_URL;
-
+const baseURL = import.meta.env.PUBLIC_SERVER_URL ??
+                "http://localhost:3000/api/v1/";
 interface UserStore {
   isLoggedIn:boolean,
   user?:{
