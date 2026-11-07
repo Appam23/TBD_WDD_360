@@ -1,6 +1,7 @@
 <script lang="ts">
   import { login, userStore } from "../js/auth.svelte.ts";
   import { setLocalStorage } from "../js/utils.mts";
+  import { onMount } from "svelte";
 
   let {
     onSuccess = (path) => {
@@ -27,6 +28,18 @@
       errorMessage = error.message;
     }
   }
+  onMount(() => {
+    // we added the getParam function to utils in Team 5
+    const param = getParam("redirect");
+    if (param) {
+      // if the redirect param exists use that
+      redirectPath = param;
+    } else if (document.referrer != window.location.href) {
+      // otherwise send back to the referring page if set
+      redirectPath = document.referrer;
+    }
+    // otherwise redirectPath will stay "/" (send home)
+  });
 </script>
 
 <h2>Login</h2>
