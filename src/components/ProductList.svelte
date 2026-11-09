@@ -6,19 +6,21 @@
   import ProductSummary from "./ProductSummary.svelte";
 
   let category = $state("");
+  let query = $state("");
   let products: Product[] = $state([]);
 
   async function init() {
     category = getParam("category") || "";
+    query = getParam("q") || "";
 
-    const data = await getProducts("", category);
+    const data = await getProducts(query, category);
     products = data.results;
   }
 
   onMount(init);
 </script>
 
-<h2>Top products: {category}</h2>
+<h2>{query ? `Search results for "${query}"` : `Top products: ${category}`}</h2>
 
 <ul class="product-list">
   {#each products as product}

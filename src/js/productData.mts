@@ -30,9 +30,8 @@ export async function getProducts(
   params.set("limit", limit.toString());
   params.set("offset", offset.toString());
 
-  const response = await fetch(
-    `${apiUrl}products?${params.toString()}`
-  );
+  const endpoint = q ? "products/search" : "products";
+  const response = await fetch(`${apiUrl}${endpoint}?${params.toString()}`);
 
   if (!response.ok) {
     throw new Error("Unable to load products");
