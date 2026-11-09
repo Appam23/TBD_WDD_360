@@ -31,6 +31,25 @@ export async function login(email:string, password:string) {
   
 }
 
+export async function register(email:string, password:string, name:string) {
+  const res = await fetch(`${baseURL}users`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password, name }),
+  });
+  const data = await res.json();
+
+  if (res.ok) {
+    userStore.user = data.user;
+    userStore.isLoggedIn = true;
+    userStore.token = data.token;
+    setLocalStorage("so-user", userStore);
+    return data;
+  }
+
+  throw new Error(data.error?.message ?? "Registration failed");
+}
+
 export function logout() {
   userStore.user = undefined;
   userStore.token = "";

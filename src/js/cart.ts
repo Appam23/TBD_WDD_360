@@ -1,11 +1,21 @@
-import { getLocalStorage } from "./utils.mjs";
-import type { Product } from "./types.mjs";
+import { getLocalStorage } from "./utils.mts";
+import type { Product } from "./types.mts";
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart");
-  const htmlItems = cartItems.map((item: Product) => cartItemTemplate(item));
   const listEl = document.querySelector(".product-list");
-  if (listEl) listEl.innerHTML = htmlItems.join("");
+  if (!listEl) return;
+
+  const storedCart = getLocalStorage("so-cart");
+  const cartItems: Product[] = Array.isArray(storedCart) ? storedCart : [];
+
+  if (cartItems.length === 0) {
+    listEl.innerHTML = '<li class="empty-cart">Your cart is empty.</li>';
+    return;
+  }
+
+  listEl.innerHTML = cartItems
+    .map((item: Product) => cartItemTemplate(item))
+    .join("");
 }
 
 function cartItemTemplate(item: Product) {

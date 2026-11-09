@@ -1,0 +1,12 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Register from "../../components/Register.svelte";
+
+const title = "Register";
+---
+
+<Layout title={title}>
+  <section class="register">
+    <Register client:load />
+  </section>
+</Layout>

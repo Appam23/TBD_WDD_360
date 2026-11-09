@@ -57,6 +57,7 @@
   </label>
   <button type="submit">Login</button>
 </form>
+<p class="register-link">Need an account? <a href="/register">Register</a></p>
 
 <style>
   .login-form {
@@ -87,6 +88,9 @@
   .error {
     color: red;
     margin-bottom: 1rem;
+    text-align: center;
+  }
+  .register-link {
     text-align: center;
   }
 </style>

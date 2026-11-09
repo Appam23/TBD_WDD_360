@@ -63,6 +63,7 @@
     <!-- Created Svelte {#if} statement to show a different menu based on if user is logged in (Step 2.7) -->
     {#if !userStore.isLoggedIn}
       <a href="/login">Login</a>
+      <a href="/register">Register</a>
     {:else}
       <a href="/login" onclick={handleLogout}>Logout</a>
       <a href="/profile" onclick={getProfile}>Profile</a>
