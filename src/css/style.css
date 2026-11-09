@@ -2,6 +2,7 @@
 /* =========================================
    1. GLOBAL VARIABLES
 ========================================= */
+@import "effects.css";
 
 :root {
   --font-body: Arial, Helvetica, sans-serif;
