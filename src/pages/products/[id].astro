@@ -16,6 +16,10 @@ type Props = CollectionEntry<"products">;
 // get the product data from the props to use in the template below. The actual data is in product.data
 const product = Astro.props;
 const title = product.data.nameWithoutBrand;
+const imageName = product.data.image.split("/").pop();
+const productImage = imageName
+  ? `https://wdd360.netlify.app/images/sleepoutside/${imageName}`
+  : product.data.image;
 ---
 <Layout title={title}>
   <script src="../../js/product.ts"></script>
@@ -27,16 +31,37 @@ const title = product.data.nameWithoutBrand;
 
         <img
           class="divider"
-          src={"../" + product.data.image}
+          src={productImage}
           alt={product.data.nameWithoutBrand}
         />
 
         <p class="product-card__price">${product.data.finalPrice}</p>
 
-        <p class="product__color">{product.data.colors[0].colorName}</p>
+        <fieldset class="product__colors">
+          <legend>Color:</legend>
+          <ul>
+            {product.data.colors.map((color) => (
+              <li>
+                <label>
+                  <input
+                    type="radio"
+                    name="color"
+                    value={color.colorCode}
+                    checked={color === product.data.colors[0]}
+                  />
+                  <img
+                    src={productImage}
+                    alt={`${color.colorName} swatch`}
+                  />
+                  <span>{color.colorName}</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </fieldset>
 
         <p class="product__description">
-          {product.data.descriptionHtmlSimple}
+          <span set:html={product.data.descriptionHtmlSimple} />
         </p>
 
         <div class="product-detail__add">
@@ -45,3 +70,31 @@ const title = product.data.nameWithoutBrand;
       </section>
   
 </Layout>
+
+<style>
+  .product__colors {
+    border: 0;
+    padding: 0;
+  }
+
+  .product__colors ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .product__colors label {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+  }
+
+  .product__colors img {
+    width: 2rem;
+    height: 2rem;
+    object-fit: cover;
+  }
+</style>

@@ -19,17 +19,16 @@ function renderCartContents() {
 }
 
 function cartItemTemplate(item: Product) {
+  const image = item.images?.primarySmall;
+  const colorName = item.colors?.[0]?.colorName ?? "Selected color";
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
-    <img
-      src="${item.image}"
-      alt="${item.name}"
-    />
+    ${image ? `<img src="${image}" alt="${item.name}" />` : ""}
   </a>
   <a href="#">
     <h2 class="card__name">${item.name}</h2>
   </a>
-  <p class="cart-card__color">${item.colors[0].colorName}</p>
+  <p class="cart-card__color">${colorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.finalPrice}</p>
 </li>`;
